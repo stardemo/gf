@@ -79,13 +79,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Core serving handling.
 	if !request.IsExited() {
-		if s.config.TryFilesModeEnabled && !request.hasServeHandler {
-			//  try static file.
-			s.serveFile(request, &staticFile{
-				Path:  s.config.ServerRoot + "/" + s.config.TryFilesIndexFile,
-				IsDir: false,
-			})
-		}
 		if request.isFileRequest {
 			// Static file service.
 			s.serveFile(request, request.StaticFile)
@@ -98,6 +91,13 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					// Serve the directory.
 					s.serveFile(request, request.StaticFile)
 				} else {
+					if s.config.TryFilesModeEnabled && !request.hasServeHandler {
+						//  try static file.
+						s.serveFile(request, &staticFile{
+							Path:  s.config.ServerRoot + "/" + s.config.TryFilesIndexFile,
+							IsDir: false,
+						})
+					}
 					if len(request.Response.Header()) == 0 &&
 						request.Response.Status == 0 &&
 						request.Response.BufferLength() == 0 {

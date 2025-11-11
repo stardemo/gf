@@ -115,7 +115,7 @@ func GetServer(name ...any) *Server {
 			panic(gerror.WrapCode(gcode.CodeInvalidConfiguration, err, ""))
 		}
 		// It enables OpenTelemetry for server in default.
-		s.Use(internalMiddlewareServerTracing)
+		//s.Use(internalMiddlewareServerTracing)
 		return s
 	})
 	return v.(*Server)
