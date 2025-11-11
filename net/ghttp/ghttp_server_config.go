@@ -267,6 +267,13 @@ type ServerConfig struct {
 
 	// DumpRouterMap specifies whether automatically dumps router map when server starts.
 	DumpRouterMap bool `json:"dumpRouterMap"`
+
+	// TryFilesModeEnabled is the global switch for static service.
+	// Set it to enable try static file to handle history mode static file.
+	TryFilesModeEnabled bool `json:"tryFilesModeEnabled"`
+
+	// TryFilesIndexFile specifies try files point index,default index.html
+	TryFilesIndexFile string `json:"tryFilesIndexFile"`
 }
 
 // NewConfig creates and returns a ServerConfig object with default configurations.
@@ -313,6 +320,8 @@ func NewConfig() ServerConfig {
 		Graceful:                false,
 		GracefulTimeout:         2, // seconds
 		GracefulShutdownTimeout: 5, // seconds
+		TryFilesModeEnabled:     false,
+		TryFilesIndexFile:       "index.html",
 	}
 }
 
